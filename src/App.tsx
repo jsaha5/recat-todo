@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import "./App.css";
+import { Todo } from "./models/Todo";
+import TodoList from "./components/TodoList";
+import AddTodo from "./components/AddTodo";
 
 function App() {
+  
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const addTodo = (text: string) => {
+    console.log(text);
+    setTodos((previousTodo) => {
+      return [ ...previousTodo, new Todo(Math.random(), text)];
+    });
+  }
+  
+  const todo = new Todo(Math.random(), "Have to read React");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h3>Todo App</h3>
+      <AddTodo onAddTodo={addTodo}></AddTodo>
+      <TodoList todos={todos}></TodoList>
     </div>
   );
 }
